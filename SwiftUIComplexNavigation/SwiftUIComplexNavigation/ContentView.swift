@@ -16,7 +16,7 @@ struct ResultView : View {
 }
 
 struct ContentView: View {
-  @State private var selection : String? = nil
+  @State private var isActive = false
   
   
     var body: some View {
@@ -25,15 +25,14 @@ struct ContentView: View {
         VStack{
           Text("you are going to flip the Coin! do you want to choose head or tail")
           
-          NavigationLink(destination: Text("First"), tag: "1", selection: $selection) {EmptyView()}
-          NavigationLink(destination: Text("Second"), tag: "2", selection: $selection) {EmptyView()}
+          NavigationLink(destination: Text("Choosed Heads"), isActive: $isActive) {EmptyView()}
           
           Button("Tap to show Details"){
-            selection = "1"
-          }
-          
-          Button("Tap to show Details"){
-            selection = "2"
+           
+            isActive = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+              isActive = false
+            }
           }
         }
         .navigationTitle("Navigation")
