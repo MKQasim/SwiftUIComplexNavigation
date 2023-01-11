@@ -15,28 +15,44 @@ struct ResultView : View {
   }
 }
 
+class User : ObservableObject{
+  @Published var score = 0
+}
+
+struct ChangeView: View {
+  
+  
+  @EnvironmentObject var user : User
+  
+  
+  var body : some View{
+    VStack {
+      Text("Score \(user.score)")
+      Button("Increase ") {
+        self.user.score += 1
+      }
+    }
+  }
+}
+
 struct ContentView: View {
-  @State private var isActive = false
+  @ObservedObject var user = User()
   
   
     var body: some View {
       NavigationView {
         
         VStack{
-          Text("you are going to flip the Coin! do you want to choose head or tail")
+          Text("Score currently is \(user.score)")
           
-          NavigationLink(destination: Text("Choosed Heads"), isActive: $isActive) {EmptyView()}
-          
-          Button("Tap to show Details"){
-           
-            isActive = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2){
-              isActive = false
-            }
+          NavigationLink(destination: ChangeView()) {
+            Text("Show Details")
           }
+       
         }
         .navigationTitle("Navigation")
       }
+      .environmentObject(user)
     }
 }
 
