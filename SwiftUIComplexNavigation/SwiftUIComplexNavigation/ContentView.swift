@@ -8,59 +8,22 @@
 import SwiftUI
 
 
-class User : ObservableObject{
-  @Published var score = 0
-}
 
-struct ChangeView: View {
-  
-  
-  @EnvironmentObject var user : User
-  
-  
-  var body : some View{
-    VStack {
-      Text("Score \(user.score)")
-      Button("Increase ") {
-        self.user.score += 1
-      }
-    }
-  }
-}
 
 struct ContentView: View {
-  @ObservedObject var user = User()
+  @State private var fullScreen = false
   
   
   var body: some View {
     NavigationView {
       
-      VStack{
-        Text("Score currently is \(user.score)")
+      Button("Toogle full Screen"){
+        self.fullScreen.toggle()
       }
-      .navigationTitle("Navigation")
-      .navigationBarItems(leading:
-                            HStack(
-                              spacing: 0, content: {
-                                Button("Multiply 1") {
-                                  self.user.score  *= 1
-                                }
-                                Button("Devide 1") {
-                                  self.user.score  /= 1
-                                }
-                              }), trailing:
-                            HStack(   
-                              spacing: 0, content: {
-                                Button("Add 1") {
-                                  self.user.score  += 1
-                                }
-                                Button("minus 1") {
-                                  self.user.score  -= 1
-                                }
-                              })
-                          
-      )
+      .navigationTitle("Full screen")
+      .navigationBarHidden(fullScreen)
     }
+    .statusBarHidden(fullScreen)
   }
 }
 
