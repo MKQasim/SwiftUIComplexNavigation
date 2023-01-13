@@ -15,14 +15,14 @@ struct ContentView: View {
   
   
   var body: some View {
-    NavigationView {
+//    NavigationView {
       
       Button("Toogle full Screen"){
         self.fullScreen.toggle()
       }
       .navigationTitle("Full screen")
       .navigationBarHidden(fullScreen)
-    }
+//    }
     .statusBarHidden(fullScreen)
   }
 }
